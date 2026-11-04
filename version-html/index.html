@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Metas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="brand" data-action="home" title="Ir a mis metas">🎯 <span>Mis Metas</span></button>
+    <div class="top-actions">
+      <button class="btn ghost" id="btnExport" title="Descargar una copia de seguridad">⬇ Exportar</button>
+      <label class="btn ghost" for="fileImport" title="Cargar una copia de seguridad">⬆ Importar</label>
+      <input type="file" id="fileImport" accept="application/json,.json" hidden>
+      <button class="btn primary" data-action="new">+ Nueva meta</button>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <!-- Crear / editar meta -->
+  <dialog id="goalDialog">
+    <form id="goalForm" method="dialog" novalidate>
+      <h2 id="goalDialogTitle">Nueva meta</h2>
+
+      <label class="field">
+        <span>Nombre de la meta *</span>
+        <input type="text" name="name" maxlength="80" placeholder="Ej: Hacer ejercicio 30 minutos" required>
+      </label>
+
+      <label class="field">
+        <span>Descripción (opcional)</span>
+        <textarea name="description" rows="2" maxlength="300" placeholder="¿Por qué es importante para ti?"></textarea>
+      </label>
+
+      <div class="field">
+        <span>Duración rápida</span>
+        <div class="chips">
+          <button type="button" class="chip" data-range="30">30 días</button>
+          <button type="button" class="chip" data-range="90">3 meses</button>
+          <button type="button" class="chip" data-range="180">6 meses</button>
+          <button type="button" class="chip" data-range="year">1 año</button>
+          <button type="button" class="chip" data-range="thisyear">Este año</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="field">
+          <span>Fecha de inicio *</span>
+          <input type="date" name="start" required>
+        </label>
+        <label class="field">
+          <span>Fecha de fin *</span>
+          <input type="date" name="end" required>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Días que quieres cumplir *</span>
+        <input type="number" name="target" min="1" step="1" required>
+        <small class="muted" id="targetHint"></small>
+      </label>
+
+      <div class="field">
+        <span>Color</span>
+        <div class="swatches" id="swatches"></div>
+      </div>
+
+      <p class="form-error" id="goalError" role="alert"></p>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Registrar un día -->
+  <dialog id="dayDialog">
+    <form id="dayForm" method="dialog">
+      <p class="muted small" id="dayGoalName"></p>
+      <h2 id="dayTitle"></h2>
+
+      <label class="switch-row">
+        <input type="checkbox" name="done" id="dayDone">
+        <span class="switch" aria-hidden="true"></span>
+        <span>Cumplí con mi meta este día</span>
+      </label>
+
+      <label class="field">
+        <span>Nota (opcional)</span>
+        <textarea name="note" rows="3" maxlength="300" placeholder="¿Qué hiciste? ¿Cómo te sentiste?"></textarea>
+      </label>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
