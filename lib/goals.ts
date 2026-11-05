@@ -42,7 +42,8 @@ export type GoalStats = {
   remaining: number;
 };
 
-export const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+/** Id en formato UUID (el que usa la columna id de Supabase). */
+export const uid = () => crypto.randomUUID();
 
 export const periodLength = (start: string, end: string) => diffDays(start, end) + 1;
 
@@ -142,9 +143,10 @@ export function withCheckin(g: Goal, key: string, done: boolean, note = ''): Goa
   return { ...g, checkins };
 }
 
-/* ---------- Guardado en el navegador ---------- */
+/* ---------- Datos de la versión anterior (guardados en el navegador) ---------- */
 
-export function loadGoals(): Goal[] {
+/** Metas que quedaron en localStorage antes de usar Supabase (para migrarlas). */
+export function loadLocalGoals(): Goal[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
@@ -153,17 +155,16 @@ export function loadGoals(): Goal[] {
       return data.goals.map(sanitizeGoal).filter((g: Goal | null): g is Goal => g !== null);
     }
   } catch (e) {
-    console.error('No se pudieron leer los datos guardados', e);
+    console.error('No se pudieron leer los datos locales', e);
   }
   return [];
 }
 
-export function saveGoals(goals: Goal[]): boolean {
+export function clearLocalGoals() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ goals }));
-    return true;
+    localStorage.removeItem(STORAGE_KEY);
   } catch {
-    return false;
+    /* sin acceso a localStorage */
   }
 }
 
@@ -173,3 +174,6 @@ export function parseBackup(text: string): Goal[] {
   if (!data || !Array.isArray(data.goals)) throw new Error('Formato inválido');
   return data.goals.map(sanitizeGoal).filter((g: Goal | null): g is Goal => g !== null);
 }
+
+/** Copia de las metas con ids nuevos (las versiones anteriores no usaban UUID). */
+export const withNewIds = (goals: Goal[]): Goal[] => goals.map(g => ({ ...g, id: uid() }));

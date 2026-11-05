@@ -535,3 +535,76 @@ dialog h2::first-letter { text-transform: uppercase; }
   margin: 0 0 18px;
   font-weight: 600;
 }
+.banner.info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  font-weight: 400;
+}
+.banner-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.user-email {
+  align-self: center;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 600px) { .user-email { display: none; } }
+
+code {
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: .88em;
+}
+
+/* ---------- Inicio de sesión ---------- */
+.auth { display: flex; justify-content: center; padding: 30px 0; }
+.auth-card {
+  width: min(420px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.auth-card .big-emoji { font-size: 2.8rem; }
+.auth-card h1 { font-size: 1.5rem; margin: 6px 0 4px; }
+.auth-card > p { margin: 0 0 18px; font-size: .92rem; }
+.auth-card form { display: flex; flex-direction: column; gap: 14px; text-align: left; }
+.auth-card .btn.primary { width: 100%; padding: 11px; margin-top: 4px; }
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+.auth-tabs button {
+  font: inherit;
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.auth-tabs button.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+.form-info {
+  margin: 0;
+  font-size: .88rem;
+  background: var(--success-soft);
+  color: var(--success);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
